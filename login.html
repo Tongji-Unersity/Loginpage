@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12306登录</title>
+     <!-- CSS -->
+     <link rel="stylesheet" href="css/m_login.css">
+     
+       
+     <script type='text/javascript'> 
+     
+    var code ; //在全局定义验证码   
+      
+    function createCode(){ 
+         code = "";    
+         var codeLength = 4;//验证码的长度   
+         var checkCode = document.getElementById("code");    
+         var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',   
+         'S','T','U','V','W','X','Y','Z');//随机数   
+         for(var i = 0; i < codeLength; i++) {//循环操作   
+            var index = Math.floor(Math.random()*36);//取得随机数的索引（0~35）   
+            code += random[index];//根据索引取得随机数加到code上   
+        }   
+        checkCode.value = code;//把code值赋给验证码   
+    } 
+    //校验验证码   
+     //校验验证码   
+     function validate(){
+			
+			var password=window.document.getElementById("password").value;
+			var username=window.document.getElementById("username").value;
+			if(username!="pengxiang"){
+				alert("用户名不正确！");
+				return false;
+			}
+			if(username!="123456"){
+				alert("密码不正确！");
+				return false;
+			}
+			
+            var inputCode = window.document.getElementById("Captcha").value.toUpperCase(); //取得输入的验证码并转化为大写         
+            if(inputCode.length <= 0) { //若输入的验证码长度为0   
+                alert("请输入验证码！"); //则弹出请输入验证码   
+                return false;
+            }else if(inputCode != code ) { //若输入的验证码与产生的验证码不一致时   
+                alert("验证码输入错误！"); //则弹出验证码输入错误   
+                createCode();//刷新验证码   
+                window.document.getElementById("Captcha").value = "";//清空文本框 
+                return false;
+            }else { //输入正确时   
+                alert("登录成功,正在跳转...");
+                
+            } 
+            return true;
+        } 
+       
+  
+</script> 
+</head>
+<body onload='createCode()'>
+    <div class="loginpage" >
+        <h1>登录12306</h1>
+        <form onsubmit="return val()">
+        <input type="text" name="username" class="username" placeholder="请输入您的用户名">
+        <input type="text" name="password" class="password" placeholder="请输入密码">
+        <input type="Captcha" class="Captcha" name="Captcha"placeholder="输入验证码">
+        <input type="button" id="code" onclick="createCode()" style="height:40px;width:120px" title='点击更换验证码' /> 
+        <button type="submit" class="submit_button">登录</button>
+        <div class="error"><span>+</span></div>
+    </form>
+    </div>
+   <script src="js/logincheck.js"></script>
+</body>
+</html>
